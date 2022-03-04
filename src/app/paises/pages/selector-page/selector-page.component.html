@@ -1,0 +1,84 @@
+<h1 class="mt-5">Selectores Anidados</h1>
+<hr>
+
+<form   [formGroup]="miFormulario" 
+        class="row"
+        (ngSubmit)="guardar()" >
+
+    <!-- Seleccionar Continente -->
+    <div class="row mb-3">
+        <div class="col">
+            <label class="form-control" class="form-label" >Continente</label>
+            <select class="form-control"
+                    formControlName="region" >
+                    <option value ="" *ngIf="paises.length===0">-- Seleccione un Continente --</option>
+                    <option *ngFor="let region of regiones" 
+                            [value] ="region">
+                            {{ region|titlecase }}
+                    </option>
+            </select>
+        </div>
+    </div>
+
+    <!-- Seleccionar País -->
+    <div class="row mb-3 ">
+        <div class="col" *ngIf="paises.length!=0">
+            <label class="form-control" class="form-label" >País</label>
+            <select class="form-control"
+                    formControlName="pais" >
+                    <option value ="" *ngIf="fronteras.length===0">-- Seleccione un País --</option>
+                    <option *ngFor="let pais of paises" 
+                            [value] ="pais.cca3">
+                            {{ pais.name.common |titlecase }}
+                    </option>
+            </select>
+        </div>
+    </div>
+
+    <!-- Seleccionar Frontera -->
+    <div class="row mb-3">
+        <div class="col" *ngIf="fronteras.length!=0">
+            <label class="form-control" class="form-label" >Frontera</label>
+            <select class="form-control"
+                    formControlName="frontera" >
+                    <option value ="" >-- Seleccione una Frontera --</option>
+                    <option *ngFor="let frontera of fronteras" 
+                            [value] ="frontera">
+                            {{ frontera|titlecase }}
+                    </option>
+            </select>
+        </div>
+    </div>
+    <br>
+    <div class="row mb-3" *ngIf="cargando">
+        <div class="col">
+            <div class="alert alert-primary">
+                Cargando...
+            </div>
+        </div>
+    </div>
+
+
+
+    <div class="row">
+        <div class="col">
+            <button type="submit" 
+                    class="btn btn-primary mt-2 float-end"
+                    [disabled]="miFormulario.invalid">
+                    Seleccionar
+                </button>
+        </div>
+    </div>
+</form>
+
+<h3>Formulario</h3>
+<pre>{{ miFormulario.valid | json }} </pre>
+<pre>{{ miFormulario.value | json }} </pre>
+<h4>Descripción de la práctica:</h4>
+<p> En esta práctica utilizamos selectores anidados, con el uso de formularios reactivos.
+    Un selector muestra información, y al cambiar, carga información 
+    basado en la primera selección y luego llegamos hasta un tercer nivel.
+    Cabe mencionar que algunas veces el tercer select no se muestra por el 
+    motivo de que no todos los paises tienen paises fronterisos.
+</p>
+<pre>Información tomada de la siguiente API: <a target="_blank" href="https://restcountries.com">https://restcountries.com</a> </pre>
